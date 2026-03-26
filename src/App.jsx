@@ -54,6 +54,12 @@ const translations = {
     numberOfGroups: "組數",
     summary: "摘要",
     close: "收起",
+    challenge: "進階挑戰",
+    challengeDesc: "回答基本題後，挑戰更深入的思考題！",
+    unlockChallenge: "🔥 解鎖進階挑戰",
+    challengeUnlocked: "🔥 進階挑戰",
+    typeAdvancedAnswer: "在這裡輸入你的進階回答...",
+    advancedHint: "思考提示",
   },
   en: {
     appName: "EBM Workshop",
@@ -107,6 +113,12 @@ const translations = {
     numberOfGroups: "Number of Groups",
     summary: "Summary",
     close: "Collapse",
+    challenge: "Challenge",
+    challengeDesc: "After answering the basics, tackle a deeper thinking question!",
+    unlockChallenge: "🔥 Unlock Challenge",
+    challengeUnlocked: "🔥 Challenge",
+    typeAdvancedAnswer: "Type your advanced answer here...",
+    advancedHint: "Thinking Hint",
   },
 };
 
@@ -151,6 +163,180 @@ const SRMA_QUESTIONS = {
     { id: 5, short: "Results", title: "What are the overall results? Is there heterogeneity? Are results precise?" },
     { id: 6, short: "Apply", title: "Can these results be applied to clinical practice? Is the intervention feasible?" },
   ],
+};
+
+// ─── Advanced Challenge Questions ───
+// One per basic question — requires synthesis, clinical judgment, and deeper EBM reasoning.
+// Keyed by basic question id. Same group assignment as basic questions.
+
+const RCT_ADVANCED = {
+  zh: {
+    1: { short: "PICO+", title: "如果你要設計一個後續研究來解決這篇研究的局限性，你的 PICO 會怎麼寫？為什麼這樣設計更好？" },
+    2: { short: "隨機+", title: "這篇研究的隨機分派方法可能導致什麼樣的選擇偏差？如果改用不同的隨機方法，結果會不會改變？請說明偏差的方向。" },
+    3: { short: "盲性+", title: "假設這篇研究改為開放標籤設計，哪些結果指標最容易受到影響？請排出風險順序並說明理由。" },
+    4: { short: "基線+", title: "如果兩組之間某個基線特徵有臨床上重要的差異（即使 p > 0.05），你會如何判斷它是否影響了結果？你會建議什麼統計方法來處理？" },
+    5: { short: "ITT+", title: "假設退出率從實際數值上升到 30%，且退出者大多來自介入組——這對結果的方向和可信度有什麼影響？請做最佳與最差情境分析。" },
+    6: { short: "終點+", title: "這篇研究使用的主要終點是替代指標還是病人導向結果？如果是替代指標，你能舉出歷史上「替代指標改善但臨床結果反而變差」的例子嗎？" },
+    7: { short: "效果+", title: "請計算 NNT，並用「以你目前照顧的病人為例」來解釋這個數字對你的臨床決策有什麼意義。這個 NNT 在你的情境中值得嗎？" },
+    8: { short: "應用+", title: "寫一段 30 秒的「電梯簡報」：向你的主管推薦（或不推薦）採用這篇研究的治療方案，並提出具體的執行計畫或替代方案。" },
+  },
+  en: {
+    1: { short: "PICO+", title: "If you were to design a follow-up study addressing this paper's limitations, how would you write the PICO? Why is your design better?" },
+    2: { short: "Random+", title: "What selection bias could this study's randomization method introduce? If a different method were used, might the results change? Describe the direction of bias." },
+    3: { short: "Blind+", title: "If this study were redesigned as open-label, which outcome measures would be most vulnerable? Rank them by risk and explain your reasoning." },
+    4: { short: "Baseline+", title: "If a baseline characteristic differed clinically between groups (even with p > 0.05), how would you assess whether it affected the results? What statistical approach would you suggest?" },
+    5: { short: "ITT+", title: "If the dropout rate rose to 30% and most dropouts were from the intervention arm — how would this affect the results' direction and credibility? Do a best-case and worst-case scenario analysis." },
+    6: { short: "Endpoint+", title: "Is this study's primary endpoint a surrogate or patient-oriented outcome? If surrogate, can you name a historical example where a surrogate improved but clinical outcomes worsened?" },
+    7: { short: "Effect+", title: "Calculate the NNT and explain what this number means for your own clinical practice. Is this NNT worthwhile in your setting? Consider costs, risks, and patient preferences." },
+    8: { short: "Apply+", title: "Write a 30-second 'elevator pitch': recommend (or don't recommend) adopting this study's intervention to your supervisor, with a specific implementation plan or alternative." },
+  },
+};
+
+const SRMA_ADVANCED = {
+  zh: {
+    1: { short: "PICO+", title: "這篇統合分析的 PICO 與其納入的個別研究的 PICO 之間有什麼差異？這些差異如何影響結論的適用性？" },
+    2: { short: "搜尋+", title: "如果作者遺漏了一個包含 200 人、效果量為零的研究，這對合併結果會有什麼影響？這反映了什麼類型的偏差？" },
+    3: { short: "品質+", title: "如果將所有被評為「高偏差風險」的研究排除後重新分析，你預期合併效果量會如何變化？為什麼？請說明偏差方向的推論邏輯。" },
+    4: { short: "合併+", title: "作者選擇了固定效應或隨機效應模型——如果改用另一個模型，結果可能會如何不同？在什麼情況下兩種模型的結果會差異最大？" },
+    5: { short: "結果+", title: "I² 值代表的是異質性的「比例」而非「大小」。請舉例說明：什麼情況下 I² = 80% 但臨床上不用太擔心？什麼情況下 I² = 30% 但其實問題很大？" },
+    6: { short: "應用+", title: "基於這篇統合分析的證據等級 (GRADE)，寫一份給醫療團隊的「臨床建議摘要」（3-5 句話），包含建議強度、證據確定性、以及需要注意的限制。" },
+  },
+  en: {
+    1: { short: "PICO+", title: "What are the differences between this meta-analysis's PICO and the PICOs of the individual included studies? How do these differences affect the applicability of the conclusions?" },
+    2: { short: "Search+", title: "If the authors missed a 200-patient study with a null effect, how would this impact the pooled result? What type of bias does this reflect?" },
+    3: { short: "Quality+", title: "If all studies rated 'high risk of bias' were excluded and the analysis re-run, how would you expect the pooled effect to change? Why? Explain your reasoning about bias direction." },
+    4: { short: "Synthesis+", title: "The authors chose a fixed-effect or random-effects model — if they had used the other, how might results differ? Under what conditions is the difference between models largest?" },
+    5: { short: "Results+", title: "I² measures the proportion, not the magnitude, of heterogeneity. Give an example where I² = 80% is clinically acceptable, and another where I² = 30% is actually concerning." },
+    6: { short: "Apply+", title: "Based on this meta-analysis's GRADE certainty, write a 'clinical recommendation summary' (3-5 sentences) for your healthcare team, including recommendation strength, certainty of evidence, and key caveats." },
+  },
+};
+
+// ─── Advanced Concept Help (Hints) ───
+const ADVANCED_HINTS = {
+  zh: {
+    rct: {
+      1: [
+        "想一想：這篇研究的族群、介入方式、或結果指標有什麼可以改進的地方？",
+        "你可以考慮：更精確的族群界定、更實際的對照組、或更有臨床意義的結果指標。",
+      ],
+      2: [
+        "區塊隨機如果區塊大小被猜到，就可能破壞分派隱匿。",
+        "思考：偏差是會「高估」還是「低估」治療效果？",
+      ],
+      3: [
+        "主觀結果（如疼痛評分）比客觀結果（如死亡率）更容易受盲性缺失影響。",
+        "想想看：研究者知道分組後，可能在哪些環節做出不同的決定？",
+      ],
+      4: [
+        "記住：p 值的大小取決於樣本數，不完全反映差異的臨床重要性。",
+        "可以考慮的方法：多變量調整分析 (adjusted analysis)、傾向分數匹配 (propensity score matching)。",
+      ],
+      5: [
+        "最佳情境：假設所有退出的介入組病人都有好結果。最差情境：假設他們都有壞結果。",
+        "如果兩種情境下結論都不變 → 結果穩健。如果結論翻轉 → 退出是嚴重問題。",
+      ],
+      6: [
+        "經典案例：心律不整藥物 (CAST trial) 減少了心律不整（替代指標），但增加了死亡率。",
+        "替代指標的可信度取決於它與臨床結果之間的因果連結強度。",
+      ],
+      7: [
+        "NNT = 1 / ARR。ARR = 對照組事件率 − 介入組事件率。",
+        "考慮：你的病人的基線風險可能與研究族群不同，NNT 會隨之改變。",
+      ],
+      8: [
+        "好的電梯簡報包含：問題 → 證據摘要 → 建議 → 下一步。",
+        "別忘了提到：成本、可行性、以及需要監測的事項。",
+      ],
+    },
+    srma: {
+      1: [
+        "注意「PICO 漂移」：統合分析可能納入了 PICO 略有不同的研究。",
+        "例如：不同研究中的「標準治療」對照組可能差異很大。",
+      ],
+      2: [
+        "這就是「發表偏差」——陰性結果的研究較不容易被發表。",
+        "一個 200 人的零效果研究會把合併效果量拉向零（無效線方向）。",
+      ],
+      3: [
+        "高偏差風險的研究通常會高估效果量。排除它們後，效果量通常會縮小。",
+        "但也有例外：如果偏差是非差異性的（non-differential），可能反而低估效果。",
+      ],
+      4: [
+        "固定效應模型在有異質性時會給大型研究過多權重。",
+        "當研究間真實效果差異大（τ² 大）且研究大小差異也大時，兩種模型結果差異最大。",
+      ],
+      5: [
+        "I² = 80% 但所有研究效果都在同一方向且臨床意義相近 → 不用太擔心。",
+        "I² = 30% 但效果方向不一致（有些有害有些有益）→ 這才是真正的問題。",
+      ],
+      6: [
+        "GRADE 建議格式：「我們建議/建議考慮 [介入]（[強/弱] 建議，[高/中/低/極低] 確定性證據）」",
+        "記得提到最影響確定性的降級因素。",
+      ],
+    },
+  },
+  en: {
+    rct: {
+      1: [
+        "Think about: what could be improved in the population, intervention, or outcome measure?",
+        "Consider: a more precise population, a more practical comparator, or a more clinically meaningful outcome.",
+      ],
+      2: [
+        "If block sizes are guessable in block randomization, allocation concealment is compromised.",
+        "Think: would the bias overestimate or underestimate the treatment effect?",
+      ],
+      3: [
+        "Subjective outcomes (e.g. pain scores) are more vulnerable to unblinding than objective ones (e.g. mortality).",
+        "Consider: once investigators know the allocation, at which steps might they behave differently?",
+      ],
+      4: [
+        "Remember: p-value magnitude depends on sample size and doesn't fully reflect clinical importance.",
+        "Methods to consider: multivariable adjusted analysis, propensity score matching.",
+      ],
+      5: [
+        "Best case: assume all intervention dropouts had good outcomes. Worst case: assume they all had bad outcomes.",
+        "If conclusions hold in both scenarios → robust. If they flip → dropout is a serious concern.",
+      ],
+      6: [
+        "Classic example: antiarrhythmics (CAST trial) reduced arrhythmias (surrogate) but increased mortality.",
+        "A surrogate's credibility depends on the strength of its causal link to the clinical outcome.",
+      ],
+      7: [
+        "NNT = 1 / ARR. ARR = control event rate − intervention event rate.",
+        "Consider: your patient's baseline risk may differ from the study population, changing the NNT.",
+      ],
+      8: [
+        "A good elevator pitch includes: problem → evidence summary → recommendation → next steps.",
+        "Don't forget: cost, feasibility, and what needs to be monitored.",
+      ],
+    },
+    srma: {
+      1: [
+        "Watch for 'PICO drift': meta-analyses may include studies with slightly different PICOs.",
+        "For example, 'standard care' comparators can vary widely across included studies.",
+      ],
+      2: [
+        "This is publication bias — studies with null results are less likely to be published.",
+        "A 200-patient null study would pull the pooled estimate toward the null.",
+      ],
+      3: [
+        "High risk-of-bias studies tend to overestimate effects. Excluding them usually shrinks the estimate.",
+        "Exception: if bias is non-differential, it may actually underestimate the effect.",
+      ],
+      4: [
+        "Fixed-effect models give excessive weight to large studies when heterogeneity exists.",
+        "The two models diverge most when true effects vary (large τ²) AND study sizes differ substantially.",
+      ],
+      5: [
+        "I² = 80% but all effects point the same direction and are clinically similar → manageable.",
+        "I² = 30% but effects go in opposite directions (some harmful, some beneficial) → that's the real problem.",
+      ],
+      6: [
+        "GRADE format: 'We recommend/suggest [intervention] (strong/conditional, high/moderate/low/very low certainty)'",
+        "Mention the most important reason for any downgrading.",
+      ],
+    },
+  },
 };
 
 // ─── Concept Help Content ───
@@ -464,10 +650,20 @@ function ConceptCard({ help, expanded, onToggle, lang }) {
   );
 }
 
-function QuestionSection({ question, questionId, answer, onAnswerChange, paperType, lang, groupColor }) {
+function QuestionSection({ question, questionId, answer, onAnswerChange, advancedAnswer, onAdvancedAnswerChange, paperType, lang, groupColor }) {
   const [helpOpen, setHelpOpen] = useState(false);
+  const [challengeOpen, setChallengeOpen] = useState(false);
+  const [hintOpen, setHintOpen] = useState(false);
   const t = translations[lang];
   const help = getConceptHelp(lang, paperType, questionId);
+
+  // Get the advanced question for this basic question
+  const advQs = paperType === "rct" ? RCT_ADVANCED : SRMA_ADVANCED;
+  const advQ = advQs[lang]?.[questionId];
+  const hints = ADVANCED_HINTS[lang]?.[paperType]?.[questionId] || [];
+
+  // Only allow challenge unlock if basic answer has some content
+  const hasBasicAnswer = (answer || "").trim().length >= 10;
 
   return (
     <div id={`q-${questionId}`} style={{
@@ -508,6 +704,111 @@ function QuestionSection({ question, questionId, answer, onAnswerChange, paperTy
         onFocus={(e) => e.target.style.borderColor = groupColor || C.teal}
         onBlur={(e) => e.target.style.borderColor = C.border}
       />
+
+      {/* ─── Advanced Challenge Section ─── */}
+      {advQ && !challengeOpen && (
+        <button
+          onClick={() => hasBasicAnswer && setChallengeOpen(true)}
+          style={{
+            display: "flex", alignItems: "center", gap: 8, width: "100%",
+            marginTop: 12, padding: "12px 14px",
+            background: hasBasicAnswer ? "#FFF0EB" : `${C.border}40`,
+            border: hasBasicAnswer ? `1.5px dashed ${C.coral}` : `1.5px dashed ${C.border}`,
+            borderRadius: 10, cursor: hasBasicAnswer ? "pointer" : "default",
+            fontFamily: font, fontSize: 14, fontWeight: 600,
+            color: hasBasicAnswer ? C.coral : C.muted,
+            transition: "all 0.2s ease",
+            opacity: hasBasicAnswer ? 1 : 0.6,
+          }}
+        >
+          <span style={{ fontSize: 16 }}>{hasBasicAnswer ? "🔥" : "🔒"}</span>
+          <span style={{ flex: 1, textAlign: "left" }}>
+            {hasBasicAnswer ? t.unlockChallenge : `${t.unlockChallenge} (${lang === "zh" ? "先回答基本題" : "answer basic Q first"})`}
+          </span>
+          {hasBasicAnswer && <span style={{ fontSize: 12 }}>→</span>}
+        </button>
+      )}
+
+      {advQ && challengeOpen && (
+        <div style={{
+          marginTop: 12, padding: "16px",
+          background: "#FFF8F5",
+          border: `1.5px solid ${C.coral}40`,
+          borderRadius: 12,
+          animation: "fadeIn 0.3s ease",
+        }}>
+          {/* Advanced question header */}
+          <div style={{ display: "flex", gap: 10, marginBottom: 12 }}>
+            <div style={{
+              width: 28, height: 28, borderRadius: 7,
+              background: `linear-gradient(135deg, ${C.coral}, ${C.red})`, color: "#fff",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: 11, fontWeight: 800, flexShrink: 0, marginTop: 2,
+            }}>
+              🔥
+            </div>
+            <div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: C.coral, marginBottom: 4, letterSpacing: 0.5 }}>
+                {t.challengeUnlocked} · {advQ.short}
+              </div>
+              <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7, color: C.dark, fontWeight: 500 }}>
+                {advQ.title}
+              </p>
+            </div>
+          </div>
+
+          {/* Hints toggle */}
+          {hints.length > 0 && (
+            <div style={{ marginBottom: 12 }}>
+              <button
+                onClick={() => setHintOpen(!hintOpen)}
+                style={{
+                  display: "flex", alignItems: "center", gap: 6,
+                  padding: "6px 12px", background: "none",
+                  border: `1px solid ${C.gold}60`, borderRadius: 8,
+                  cursor: "pointer", fontFamily: font,
+                  fontSize: 12, color: C.gold, fontWeight: 600,
+                }}
+              >
+                <span>💡</span>
+                <span>{t.advancedHint}</span>
+                <span style={{ fontSize: 10, transform: hintOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>▼</span>
+              </button>
+              {hintOpen && (
+                <div style={{
+                  marginTop: 8, padding: "10px 12px",
+                  background: "#FFF8E7", borderRadius: 8,
+                  borderLeft: `3px solid ${C.gold}`,
+                  animation: "slideDown 0.2s ease",
+                }}>
+                  {hints.map((hint, i) => (
+                    <div key={i} style={{ fontSize: 13, lineHeight: 1.6, color: "#7A6520", marginBottom: i < hints.length - 1 ? 6 : 0 }}>
+                      💡 {hint}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Advanced answer area */}
+          <textarea
+            value={advancedAnswer || ""}
+            onChange={(e) => onAdvancedAnswerChange(questionId, e.target.value)}
+            placeholder={t.typeAdvancedAnswer}
+            style={{
+              width: "100%", minHeight: 100, padding: 14,
+              border: `1.5px solid ${C.coral}30`, borderRadius: 10,
+              fontSize: 15, lineHeight: 1.7, fontFamily: font,
+              color: C.dark, background: C.card, resize: "vertical",
+              boxSizing: "border-box",
+              transition: "border-color 0.2s",
+            }}
+            onFocus={(e) => e.target.style.borderColor = C.coral}
+            onBlur={(e) => e.target.style.borderColor = `${C.coral}30`}
+          />
+        </div>
+      )}
     </div>
   );
 }
@@ -590,6 +891,7 @@ export default function App() {
   const [userGroup, setUserGroup] = useState(1);
   const [roomInput, setRoomInput] = useState("");
   const [answers, setAnswers] = useState({});
+  const [advancedAnswers, setAdvancedAnswers] = useState({});
   const [activeQ, setActiveQ] = useState(1);
   const [phase, setPhase] = useState("setup");
   const [timerEnd, setTimerEnd] = useState(null);
@@ -630,6 +932,13 @@ export default function App() {
   };
 
   const myQuestions = session ? getQuestionsForGroup(userGroup, session.paperType) : [];
+
+  // Sync activeQ to the group's first question when session or group changes
+  useEffect(() => {
+    if (myQuestions.length > 0 && !myQuestions.find(q => q.id === activeQ)) {
+      setActiveQ(myQuestions[0].id);
+    }
+  }, [myQuestions, activeQ]);
 
   const createSession = () => {
     const code = String(Math.floor(1000 + Math.random() * 9000));
@@ -680,6 +989,13 @@ export default function App() {
 
   const handleAnswerChange = useCallback((qId, value) => {
     setAnswers(prev => ({
+      ...prev,
+      [`${userGroup}-${qId}`]: { content: value, updatedBy: userName, updatedAt: Date.now() }
+    }));
+  }, [userGroup, userName]);
+
+  const handleAdvancedAnswerChange = useCallback((qId, value) => {
+    setAdvancedAnswers(prev => ({
       ...prev,
       [`${userGroup}-${qId}`]: { content: value, updatedBy: userName, updatedAt: Date.now() }
     }));
@@ -1063,6 +1379,9 @@ export default function App() {
             const gIdx = assignedGroupId - 1;
             const gColor = GROUP_COLORS[gIdx % 4];
             const ans = answers[`${assignedGroupId}-${q.id}`];
+            const advAns = advancedAnswers[`${assignedGroupId}-${q.id}`];
+            const advQs = session?.paperType === "rct" ? RCT_ADVANCED : SRMA_ADVANCED;
+            const advQ = advQs[lang]?.[q.id];
             return (
               <div key={q.id} style={{
                 marginBottom: 16, padding: "16px 20px",
@@ -1095,6 +1414,26 @@ export default function App() {
                     <div style={{ fontSize: 11, color: C.muted, marginTop: 8 }}>✏️ {ans.updatedBy}</div>
                   )}
                 </div>
+
+                {/* Advanced challenge answer on dashboard */}
+                {advQ && advAns?.content && (
+                  <div style={{
+                    marginTop: 10, padding: "12px 14px", borderRadius: 8,
+                    background: "#FFF8F5",
+                    border: `1px solid ${C.coral}30`,
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+                      <span style={{ fontSize: 12 }}>🔥</span>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: C.coral }}>{t.challenge}: {advQ.short}</span>
+                    </div>
+                    <div style={{ fontSize: 13, lineHeight: 1.7, color: C.dark, whiteSpace: "pre-wrap" }}>
+                      {advAns.content}
+                    </div>
+                    {advAns.updatedBy && (
+                      <div style={{ fontSize: 11, color: C.muted, marginTop: 6 }}>✏️ {advAns.updatedBy}</div>
+                    )}
+                  </div>
+                )}
               </div>
             );
           })}
@@ -1154,21 +1493,21 @@ export default function App() {
           activeQ={activeQ}
           onSelect={(qId) => {
             setActiveQ(qId);
-            const el = document.getElementById(`q-${qId}`);
-            if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
           }}
           groupColor={groupColor}
         />
 
-        {/* Questions — only this group's assigned questions */}
+        {/* Show only the active question */}
         <div style={{ padding: "0 16px 80px" }}>
-          {myQuestions.map(q => (
+          {myQuestions.filter(q => q.id === activeQ).map(q => (
             <QuestionSection
               key={q.id}
               question={q}
               questionId={q.id}
               answer={answers[`${userGroup}-${q.id}`]?.content}
               onAnswerChange={handleAnswerChange}
+              advancedAnswer={advancedAnswers[`${userGroup}-${q.id}`]?.content}
+              onAdvancedAnswerChange={handleAdvancedAnswerChange}
               paperType={session?.paperType || "rct"}
               lang={lang}
               groupColor={groupColor}
