@@ -36,15 +36,19 @@ Workshop day:
 ```
 Open app on phone → enter room code + name + select group
   → Sees ONLY their group's assigned questions (not all questions)
+  → Tab bar switches between questions (one at a time)
   → Paper title/authors shown in collapsible header
 
 During 25-min discussion:
   → Answer assigned question(s) — typing on phone
   → Tap 💡 next to any question for EBM concept explainer
+  → After answering basic Q (≥10 chars), 🔥 Advanced Challenge unlocks
+  → Advanced challenge = deeper thinking question on same topic
   → Groupmates can edit the same answer (last-write-wins for now)
 
 During 25-min reporting:
   → Facilitator screen shows all questions with each group's answer
+  → Advanced challenge answers shown below basic answers (if submitted)
 ```
 
 ---
@@ -66,7 +70,7 @@ During 25-min reporting:
 │     - Paper type selector (demo mode only)       │
 │     - Select group (color-coded: 1–4)            │
 │                                                  │
-│  ③ Workshop Screen (phone, scrollable)           │
+│  ③ Workshop Screen (phone)                      │
 │     ┌──────────────────────────────────┐         │
 │     │ Header: app name, room code,     │         │
 │     │         timer, lang toggle       │         │
@@ -77,12 +81,22 @@ During 25-min reporting:
 │     │   title, authors, type badge     │         │
 │     ├──────────────────────────────────┤         │
 │     │ Sticky tab bar (group's Qs only) │         │
+│     │ Tabs SWITCH content (1 Q at a    │         │
+│     │ time), not scroll                │         │
 │     ├──────────────────────────────────┤         │
-│     │ Only assigned questions:         │         │
+│     │ Active question only:            │         │
 │     │  ┌── Question ───────────────┐   │         │
 │     │  │ # badge + question text   │   │         │
 │     │  │ [💡 concept help] expand  │   │         │
 │     │  │ textarea (answer area)    │   │         │
+│     │  │                           │   │         │
+│     │  │ [🔥 Unlock Challenge]     │   │         │
+│     │  │  (appears after ≥10 chars)│   │         │
+│     │  │ ┌── Advanced Challenge ─┐ │   │         │
+│     │  │ │ 🔥 challenge question │ │   │         │
+│     │  │ │ [💡 hints] toggle     │ │   │         │
+│     │  │ │ textarea (adv answer) │ │   │         │
+│     │  │ └──────────────────────┘ │   │         │
 │     │  └───────────────────────────┘   │         │
 │     └──────────────────────────────────┘         │
 │                                                  │
@@ -106,6 +120,7 @@ During 25-min reporting:
 │     - One card per question:                     │
 │       question text + assigned group badge +     │
 │       that group's answer (or "尚未作答")         │
+│       + 🔥 advanced answer below (if submitted)  │
 │                                                  │
 └─────────────────────────────────────────────────┘
 ```
@@ -147,6 +162,44 @@ SR/MA: Q1-2 → G1 | Q3 → G2   | Q4 → G3   | Q5-6 → G4
 
 Participants only see and edit questions assigned to their group. Dashboard shows one group's answer per question.
 
+### Advanced Challenge Questions (🔥)
+
+Each basic question has one paired advanced challenge — a deeper, synthesis-level question that requires clinical judgment, scenario analysis, or actionable output. Advanced challenges share the same group assignment as their parent basic question.
+
+**Unlock rule:** Basic answer must have ≥10 characters → 🔥 button appears → tap to reveal challenge + its own answer textarea. The advanced panel also includes collapsible 💡 thinking hints (2 per question).
+
+#### RCT Advanced (8 challenges)
+
+| Parent Q | Short | Challenge (Chinese) |
+|----------|-------|-------------------|
+| Q1 PICO | PICO+ | 如果你要設計一個後續研究來解決這篇研究的局限性，你的 PICO 會怎麼寫？ |
+| Q2 隨機 | 隨機+ | 這篇研究的隨機分派方法可能導致什麼樣的選擇偏差？偏差的方向是什麼？ |
+| Q3 盲性 | 盲性+ | 假設改為開放標籤設計，哪些結果指標最容易受影響？排出風險順序。 |
+| Q4 基線 | 基線+ | 如果某基線特徵有臨床重要差異（即使 p > 0.05），你會如何處理？ |
+| Q5 ITT | ITT+ | 假設退出率 30% 且退出者多來自介入組，做最佳/最差情境分析。 |
+| Q6 終點 | 終點+ | 主要終點是替代指標還是病人導向結果？舉出替代指標矛盾的歷史案例。 |
+| Q7 效果 | 效果+ | 計算 NNT 並用你目前照顧的病人解釋。這個 NNT 值得嗎？ |
+| Q8 應用 | 應用+ | 寫一段 30 秒電梯簡報：向主管推薦（或不推薦）並提出執行計畫。 |
+
+#### SR/MA Advanced (6 challenges)
+
+| Parent Q | Short | Challenge (Chinese) |
+|----------|-------|-------------------|
+| Q1 PICO | PICO+ | 統合分析的 PICO 與個別研究的 PICO 之間有什麼差異？如何影響結論？ |
+| Q2 搜尋 | 搜尋+ | 如果遺漏一個 200 人零效果研究，對合併結果有什麼影響？什麼偏差？ |
+| Q3 品質 | 品質+ | 排除所有高偏差風險研究後重新分析，效果量會如何變化？為什麼？ |
+| Q4 合併 | 合併+ | 如果改用另一種模型（固定↔隨機效應），結果會如何不同？ |
+| Q5 結果 | 結果+ | 舉例：I²=80% 但不擔心 vs I²=30% 但問題很大——什麼情況？ |
+| Q6 應用 | 應用+ | 基於 GRADE 等級，寫一份給醫療團隊的臨床建議摘要（3-5 句話）。 |
+
+#### Design principles for advanced questions
+
+- **Not more reading comprehension** — requires reasoning, scenario analysis, clinical judgment
+- **One-to-one mapping** — each advanced Q anchored to exactly one basic Q, same group assignment
+- **Pharmacist-relevant** — NNT for your patients, elevator pitches, GRADE summaries
+- **Bilingual** — full ZH and EN versions in `RCT_ADVANCED` and `SRMA_ADVANCED` objects
+- **Hints not answers** — 2 thinking hints per question (in `ADVANCED_HINTS`), not model answers
+
 ---
 
 ## 4. Tech Stack
@@ -173,7 +226,7 @@ ebm-workshop-companion/
 ├── EBM_WORKSHOP_COMPANION_PLAN.md  ← this file
 └── src/
     ├── main.jsx
-    └── App.jsx                     ← all screens, questions, concept help (~1200 lines)
+    └── App.jsx                     ← all screens, questions, concept help, advanced challenges (~1590 lines)
 ```
 
 ---
@@ -216,6 +269,7 @@ ebm-workshop-companion/
 | session_id | UUID (FK) | → workshop_sessions.id |
 | group_id | INT | The assigned group for this question |
 | question_num | INT | 1–8 (RCT) or 1–6 (SR/MA) |
+| is_advanced | BOOLEAN | false = basic answer, true = advanced challenge answer |
 | content | TEXT | The group's answer (latest version) |
 | updated_at | TIMESTAMPTZ | Auto-updated on each edit |
 | updated_by | TEXT | Name of last editor |
@@ -266,6 +320,12 @@ All concept help is built into `App.jsx` in the `CONCEPT_HELP` object. Each 💡
 - [x] Two question templates: RCT (8 Qs) and SR/MA (6 Qs)
 - [x] Group-to-question assignment logic
 - [x] Deployed on Vercel
+- [x] Tab bar switches content (one question at a time, not scroll-all)
+- [x] activeQ auto-syncs to group's first assigned question
+- [x] 🔥 Advanced challenge questions (8 RCT + 6 SR/MA, bilingual)
+- [x] Advanced unlock gating (≥10 chars in basic answer)
+- [x] Advanced thinking hints (2 per question, collapsible)
+- [x] Advanced answers shown on facilitator dashboard
 - [ ] **Supabase realtime: answers sync across devices** ← NEXT
 
 ### Phase 2 — Article Integration & Backend
@@ -308,16 +368,20 @@ Layout (participant, phone):
   ├─────────────────────────┤
   │ 📄 Paper title    ▼     │  ← collapsible article info
   ├─────────────────────────┤
-  │ Q1 PICO │ Q2 隨機       │  ← sticky tabs (group's Qs only)
+  │[Q1 PICO] Q2 隨機        │  ← sticky tabs (switches content)
   ├─────────────────────────┤
-  │ [1] Question text...    │
+  │ [1] Question text...    │  ← only active Q shown
   │ [💡 概念說明]           │
   │ ┌─────────────────┐     │
   │ │ (answer area)    │     │
   │ └─────────────────┘     │
   │                         │
-  │ [2] Question text...    │
-  │ ...                     │
+  │ [🔥 解鎖進階挑戰]       │  ← locked until ≥10 chars
+  │ ┌─ 🔥 進階挑戰 ──────┐ │
+  │ │ challenge question  │ │
+  │ │ [💡 思考提示]       │ │
+  │ │ (advanced answer)   │ │
+  │ └─────────────────────┘ │
   └─────────────────────────┘
 
 Color palette:
@@ -333,6 +397,9 @@ Color palette:
   Group 4: #2E86C1 (blue)
   Concept help bg: #E8F6F7 (light teal)
   Tip bg: #FFF8E7 (light gold)
+  Advanced challenge bg: #FFF8F5 (light coral)
+  Advanced challenge border: #E8734A40 (coral 25%)
+  Advanced unlock button: #FFF0EB (peach)
 ```
 
 ---
@@ -351,3 +418,8 @@ Color palette:
 | Realtime editing | Last-write-wins + indicator | True collab editing (CRDT) too complex |
 | Framework | Vite + React | Modern, fast, separate from MA101's CRA |
 | Demo mode | Any 4-digit code creates demo session | For testing without Supabase |
+| Tab behavior | Switch content (one Q at a time) | Not scroll-all — cleaner on phone, avoids confusion |
+| Advanced challenge gating | ≥10 chars in basic answer | Prevents skipping basics; low bar feels natural |
+| Advanced Q design | Synthesis/judgment, not reading comprehension | Scenario analysis, NNT calc, elevator pitches, GRADE summaries |
+| Advanced hints | 2 per Q, collapsible | Scaffolding without giving answers |
+| Advanced on dashboard | Show below basic answer if submitted | Facilitator sees full picture during reporting |
